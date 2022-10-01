@@ -3,4 +3,3 @@ New directory for project
 =======
 111
 >>>>>>> origin/Shvedov_Vitaliy
-222
