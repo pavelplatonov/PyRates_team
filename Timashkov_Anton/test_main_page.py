@@ -18,6 +18,7 @@ def browser():
 
 class TestMainPage():
     @pytest.mark.open_page
+    @pytest.mark.smoke
     def test_1(self, browser):
         browser.get(link)
 

@@ -5,8 +5,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 def test_simple():
     driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()))
-    driver.get("https://www.selenium.dev/")
+    try:
+        driver.get("https://www.selenium.dev/")
 
-    assert driver.title == 'Selenium'
-
-    driver.quit()
+        assert driver.title == 'Selenium'
+    finally:
+        driver.quit()
