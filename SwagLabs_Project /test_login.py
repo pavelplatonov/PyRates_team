@@ -19,3 +19,24 @@ def test_login_valid_user(browser):
     page.sendkeys_element(*LoginLocators.login_field, valid_user)
     page.sendkeys_element(*LoginLocators.password_field, password)
     page.click_element(*LoginLocators.login_btn)
+
+def test_locked_out_user(browser):
+    page = LoginPage(browser, link)
+    page.open_login_page()
+    page.sendkeys_element(*LoginLocators.login_field, locked_out_user)
+    page.sendkeys_element(*LoginLocators.password_field, password)
+    page.click_element(*LoginLocators.login_btn)
+
+def test_problem_user(browser):
+    page = LoginPage(browser, link)
+    page.open_login_page()
+    page.sendkeys_element(*LoginLocators.login_field, problem_user)
+    page.sendkeys_element(*LoginLocators.password_field, password)
+    page.click_element(*LoginLocators.login_btn)
+
+def test_performance_glitch_user(browser):
+    page = LoginPage(browser, link)
+    page.open_login_page()
+    page.sendkeys_element(*LoginLocators.login_field, performance_glitch_user)
+    page.sendkeys_element(*LoginLocators.password_field, password)
+    page.click_element(*LoginLocators.login_btn)
