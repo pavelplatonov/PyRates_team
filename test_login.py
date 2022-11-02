@@ -1,3 +1,6 @@
+import time
+import timeit
+
 import pytest
 import datetime
 import os
@@ -24,11 +27,15 @@ def test_open_login_page(browser):
 @pytest.mark.smoke
 def test_login_valid_user(browser):
     page = LoginPage(browser, link)
+    st = time.perf_counter()
     page.open_login_page()
     page.sendkeys_element(*LoginLocators.login_field, valid_user)
     page.sendkeys_element(*LoginLocators.password_field, password)
     page.click_element(*LoginLocators.login_btn)
+    v_user_timer = time.perf_counter() - st
     page.should_be_current_page('https://www.saucedemo.com/inventory.html')
+    print(f'Valid user, время входа: {v_user_timer}')
+
 
 
 """TC_001.00.02 | Страница авторизации > Авторизация заблокированного пользователя с валидными данными"""
@@ -50,22 +57,27 @@ def test_locked_out_user(browser):
 """TC_001.00.03 | Страница авторизации > Авторизация проблемного пользователя с валидными данными"""
 def test_problem_user(browser):
     page = LoginPage(browser, link)
+    st_p = time.perf_counter()
     page.open_login_page()
     page.sendkeys_element(*LoginLocators.login_field, problem_user)
     page.sendkeys_element(*LoginLocators.password_field, password)
     page.click_element(*LoginLocators.login_btn)
+    p_user_timer = time.perf_counter() - st_p
     page.should_be_current_page('https://www.saucedemo.com/inventory.html')
+    print(f'Problem user, время входа: {p_user_timer}')
 
 
 """TC_001.00.04 | Страница авторизации > Авторизация performance glitch user с валидными данными"""
 def test_performance_glitch_user(browser):
     page = LoginPage(browser, link)
+    start_g = time.perf_counter()
     page.open_login_page()
     page.sendkeys_element(*LoginLocators.login_field, performance_glitch_user)
     page.sendkeys_element(*LoginLocators.password_field, password)
     page.click_element(*LoginLocators.login_btn)
+    performance_glitch_user_timer = time.perf_counter()-start_g
     page.should_be_current_page('https://www.saucedemo.com/inventory.html')
-
+    print(f'Performance glitch user, время входа: {performance_glitch_user_timer}')
 
 """TC_001.00.05 | Страница авторизации > Авторизация стандартного пользователя с валидным логином и пустым паролем"""
 def test_login_valid_user_empty_password(browser):
