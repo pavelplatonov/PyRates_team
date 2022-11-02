@@ -6,3 +6,4 @@ class LoginLocators():
     password_field = (By.ID, 'password')
     login_btn = (By.ID, 'login-button')
     error_warning = (By.XPATH, '//h3[@data-test="error"]')
+
