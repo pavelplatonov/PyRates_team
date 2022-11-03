@@ -16,14 +16,11 @@ password = 'secret_sauce'
 @pytest.mark.smoke
 def test_login_valid_user(browser):
     page = LoginPage(browser, link)
-    start = time.perf_counter()
     page.open_login_page()
     page.keyboard_input(*LoginLocators.login_field, valid_user)
     page.keyboard_input(*LoginLocators.password_field, password)
     page.click_element(*LoginLocators.login_btn)
-    loading_time = time.perf_counter()-start
     page.should_be_current_page('https://www.saucedemo.com/inventory.html')
-    assert loading_time <= 9, 'loading time exceed 5 seconds'
 
 
 """TC_001.00.02 | Страница авторизации > Авторизация заблокированного пользователя с валидными данными"""
@@ -49,7 +46,7 @@ def test_problem_user(browser):
     page.click_element(*LoginLocators.login_btn)
     loading_time = time.perf_counter() - start
     page.should_be_current_page('https://www.saucedemo.com/inventory.html')
-    assert loading_time <= 9, 'loading time exceed 5 seconds'
+    # assert loading_time <= 15, 'loading time exceed 15 seconds'
 
 
 """TC_001.00.04 | Страница авторизации > Авторизация performance glitch user с валидными данными"""
@@ -63,7 +60,7 @@ def test_performance_glitch_user(browser):
     page.click_element(*LoginLocators.login_btn)
     loading_time = time.perf_counter()-start
     page.should_be_current_page('https://www.saucedemo.com/inventory.html')
-    assert loading_time <= 9, 'loading time exceed 5 seconds'
+    assert loading_time <= 15, 'loading time exceed 15 seconds'
 
 """TC_001.00.05 | Страница авторизации > Авторизация стандартного пользователя с валидным логином и пустым паролем"""
 def test_login_valid_user_empty_password(browser):

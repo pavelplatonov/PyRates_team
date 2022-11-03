@@ -21,8 +21,8 @@ class BasePage():
 
     """Передает текст или нажание кнопок на клавиатуре"""
 
-    def keyboard_input(self, method, locator, text):
-        self.browser.find_element(method, locator).send_keys(text)
+    def keyboard_input(self, method, locator, keys_text):
+        self.browser.find_element(method, locator).send_keys(keys_text)
 
     """Подтверждение наличия элемента на странице"""
 
