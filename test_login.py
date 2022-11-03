@@ -1,6 +1,4 @@
 import time
-import timeit
-
 import pytest
 import datetime
 import os
@@ -27,15 +25,14 @@ def test_open_login_page(browser):
 @pytest.mark.smoke
 def test_login_valid_user(browser):
     page = LoginPage(browser, link)
-    st = time.perf_counter()
+    start = time.perf_counter()
     page.open_login_page()
     page.sendkeys_element(*LoginLocators.login_field, valid_user)
     page.sendkeys_element(*LoginLocators.password_field, password)
     page.click_element(*LoginLocators.login_btn)
-    v_user_timer = time.perf_counter() - st
+    loading_time = time.perf_counter()-start
     page.should_be_current_page('https://www.saucedemo.com/inventory.html')
-    print(f'Valid user, время входа: {v_user_timer}')
-
+    assert loading_time <= 5, 'loading time exceed 5 seconds'
 
 
 """TC_001.00.02 | Страница авторизации > Авторизация заблокированного пользователя с валидными данными"""
@@ -48,36 +45,34 @@ def test_locked_out_user(browser):
     error_text = page.find_element_text(*LoginLocators.error_warning)
     assert error_text == 'Epic sadface: Sorry, this user has been locked out.', 'wrong warning text'
     """скриншот результата"""
-    screen_path = os.path.abspath("screenshots")
-    now_date = datetime.datetime.now().strftime("_%H-%M-%S.%d.%m.%y.")
-    name_screenshot = 'err_l_locked_out_user' + now_date + 'png'
-    browser.save_screenshot(screen_path + '/' + name_screenshot)
+    page.take_screenshot()
 
 
 """TC_001.00.03 | Страница авторизации > Авторизация проблемного пользователя с валидными данными"""
 def test_problem_user(browser):
     page = LoginPage(browser, link)
-    st_p = time.perf_counter()
+    start = time.perf_counter()
     page.open_login_page()
     page.sendkeys_element(*LoginLocators.login_field, problem_user)
     page.sendkeys_element(*LoginLocators.password_field, password)
     page.click_element(*LoginLocators.login_btn)
-    p_user_timer = time.perf_counter() - st_p
+    loading_time = time.perf_counter() - start
     page.should_be_current_page('https://www.saucedemo.com/inventory.html')
-    print(f'Problem user, время входа: {p_user_timer}')
+    assert loading_time <= 5, 'loading time exceed 5 seconds'
 
 
 """TC_001.00.04 | Страница авторизации > Авторизация performance glitch user с валидными данными"""
+@pytest.mark.xfail
 def test_performance_glitch_user(browser):
     page = LoginPage(browser, link)
-    start_g = time.perf_counter()
+    start = time.perf_counter()
     page.open_login_page()
     page.sendkeys_element(*LoginLocators.login_field, performance_glitch_user)
     page.sendkeys_element(*LoginLocators.password_field, password)
     page.click_element(*LoginLocators.login_btn)
-    performance_glitch_user_timer = time.perf_counter()-start_g
+    loading_time = time.perf_counter()-start
     page.should_be_current_page('https://www.saucedemo.com/inventory.html')
-    print(f'Performance glitch user, время входа: {performance_glitch_user_timer}')
+    assert loading_time <= 5, 'loading time exceed 5 seconds'
 
 """TC_001.00.05 | Страница авторизации > Авторизация стандартного пользователя с валидным логином и пустым паролем"""
 def test_login_valid_user_empty_password(browser):
@@ -87,12 +82,7 @@ def test_login_valid_user_empty_password(browser):
     page.click_element(*LoginLocators.login_btn)
     error_text = page.find_element_text(*LoginLocators.error_warning)
     assert error_text == 'Epic sadface: Password is required', "wrong warning text"
-    """скриншот результата"""
-    screen_path = os.path.abspath("screenshots")
-    now_date = datetime.datetime.now().strftime("_%H-%M-%S.%d.%m.%y.")
-    name_screenshot = 'err_empty_pass' + now_date + 'png'
-    browser.save_screenshot(screen_path + '/' + name_screenshot)
-
+    page.take_screenshot()
 
 
 """TC_001.00.06 | Страница авторизации > Авторизация с невалидным пользователем и валидным паролем"""
@@ -104,12 +94,7 @@ def test_login_invalid_user_valid_password(browser):
     page.click_element(*LoginLocators.login_btn)
     error_text = page.find_element_text(*LoginLocators.error_warning)
     assert error_text == 'Epic sadface: Username and password do not match any user in this service', 'wrong warning text'
-    """скриншот результата"""
-    screen_path = os.path.abspath("screenshots")
-    now_date = datetime.datetime.now().strftime("_%H-%M-%S.%d.%m.%y.")
-    name_screenshot = 'invalid_user' + now_date + 'png'
-    browser.save_screenshot(screen_path + '/' + name_screenshot)
-
+    page.take_screenshot()
 
 
 """TC_001.00.07 | Страница авторизации > Авторизация стандартного пользователя с невалидным паролем"""
@@ -121,13 +106,7 @@ def test_login_valid_user_invalid_password(browser):
     page.click_element(*LoginLocators.login_btn)
     error_text = page.find_element_text(*LoginLocators.error_warning)
     assert error_text == 'Epic sadface: Username and password do not match any user in this service', 'wrong warning text'
-    """скриншот результата"""
-    screen_path = os.path.abspath("screenshots")
-    now_date = datetime.datetime.now().strftime("_%H-%M-%S.%d.%m.%y.")
-    name_screenshot = 'invalid_pass' + now_date + 'png'
-    browser.save_screenshot(screen_path + '/' + name_screenshot)
-
-
+    page.take_screenshot()
 
 
 """TC_001.00.09 | Страница авторизации > Авторизация стандартного пользователя с валидными данными и вводом через Enter"""
