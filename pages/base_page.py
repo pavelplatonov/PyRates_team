@@ -3,7 +3,6 @@ from selenium.common.exceptions import NoSuchElementException
 import os
 
 
-
 class BasePage():
 
     def __init__(self, browser, link):
@@ -22,7 +21,7 @@ class BasePage():
 
     """Передает текст или нажание кнопок на клавиатуре"""
 
-    def sendkeys_element(self, method, locator, text):
+    def keyboard_input(self, method, locator, text):
         self.browser.find_element(method, locator).send_keys(text)
 
     """Подтверждение наличия элемента на странице"""

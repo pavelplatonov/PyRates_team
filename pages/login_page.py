@@ -1,9 +1,7 @@
 from .base_page import BasePage
-from .locators import LoginLocators
-from selenium.webdriver.common.by import By
-from selenium.webdriver import Keys
 
 link = 'https://www.saucedemo.com/'
+
 
 class LoginPage(BasePage):
 
