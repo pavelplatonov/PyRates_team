@@ -45,7 +45,7 @@ def test_locked_out_user(browser):
     error_text = page.find_element_text(*LoginLocators.error_warning)
     assert error_text == 'Epic sadface: Sorry, this user has been locked out.', 'wrong warning text'
     """скриншот результата"""
-    page.take_screenshot()
+    page.take_screenshot(test_name='test_locked_out_user')
 
 
 """TC_001.00.03 | Страница авторизации > Авторизация проблемного пользователя с валидными данными"""
@@ -82,7 +82,7 @@ def test_login_valid_user_empty_password(browser):
     page.click_element(*LoginLocators.login_btn)
     error_text = page.find_element_text(*LoginLocators.error_warning)
     assert error_text == 'Epic sadface: Password is required', "wrong warning text"
-    page.take_screenshot()
+    page.take_screenshot(test_name='test_login_valid_user_empty_password')
 
 
 """TC_001.00.06 | Страница авторизации > Авторизация с невалидным пользователем и валидным паролем"""
@@ -94,7 +94,7 @@ def test_login_invalid_user_valid_password(browser):
     page.click_element(*LoginLocators.login_btn)
     error_text = page.find_element_text(*LoginLocators.error_warning)
     assert error_text == 'Epic sadface: Username and password do not match any user in this service', 'wrong warning text'
-    page.take_screenshot()
+    page.take_screenshot(test_name='test_login_invalid_user_valid_password')
 
 
 """TC_001.00.07 | Страница авторизации > Авторизация стандартного пользователя с невалидным паролем"""
@@ -106,7 +106,7 @@ def test_login_valid_user_invalid_password(browser):
     page.click_element(*LoginLocators.login_btn)
     error_text = page.find_element_text(*LoginLocators.error_warning)
     assert error_text == 'Epic sadface: Username and password do not match any user in this service', 'wrong warning text'
-    page.take_screenshot()
+    page.take_screenshot(test_name='test_login_valid_user_invalid_password')
 
 
 """TC_001.00.09 | Страница авторизации > Авторизация стандартного пользователя с валидными данными и вводом через Enter"""
