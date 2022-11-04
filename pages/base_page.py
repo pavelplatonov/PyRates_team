@@ -3,8 +3,7 @@ from selenium.common.exceptions import NoSuchElementException
 import os
 
 
-class BasePage():
-
+class BasePage:
     def __init__(self, browser, link):
         self.browser = browser
         self.link = link
@@ -36,17 +35,12 @@ class BasePage():
     """Подтверждение текущего адреса страницы"""
 
     def should_be_current_page(self, link):
-        assert link in self.browser.current_url, 'wrong url'
+        assert link in self.browser.current_url, "wrong url"
 
     """скриншот результата"""
+
     def take_screenshot(self, test_name):
         screen_path = os.path.abspath("screenshots")
         now_date = datetime.datetime.now().strftime("_%H-%M-%S.%d.%m.%y.")
-        name_screenshot = test_name + now_date + 'png'
-        self.browser.save_screenshot(screen_path + '/' + name_screenshot)
-
-    """Получаем текст эллемента"""
-    def text_of_element(self, method, locator):
-        elem = self.browser.find_element(method, locator)
-        text = elem.text
-        return text
+        name_screenshot = test_name + now_date + "png"
+        self.browser.save_screenshot(screen_path + "/" + name_screenshot)
