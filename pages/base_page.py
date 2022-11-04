@@ -44,3 +44,9 @@ class BasePage():
         now_date = datetime.datetime.now().strftime("_%H-%M-%S.%d.%m.%y.")
         name_screenshot = test_name + now_date + 'png'
         self.browser.save_screenshot(screen_path + '/' + name_screenshot)
+
+    """Получаем текст эллемента"""
+    def text_of_element(self, method, locator):
+        elem = self.browser.find_element(method, locator)
+        text = elem.text
+        return text
