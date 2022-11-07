@@ -28,9 +28,6 @@ category = "main"
 optional = false
 python-versions = ">=3.7"
 
-[tool.black]
-line-length = 88
-
 [package.dependencies]
 click = ">=8.0.0"
 mypy-extensions = ">=0.4.3"
